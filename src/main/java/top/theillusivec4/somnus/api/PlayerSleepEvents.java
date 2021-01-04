@@ -23,6 +23,7 @@ import net.fabricmc.fabric.api.util.TriState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 /**
  * Provides player events related to sleeping.
@@ -36,6 +37,8 @@ public final class PlayerSleepEvents {
    *
    * <p>Also called once when first attempting to sleep in {@link ServerPlayerEntity#trySleep(BlockPos)}.
    * This occurs after {@link PlayerSleepEvents#TRY_SLEEP}.</p>
+   *
+   * <p>{@link TriState#DEFAULT} delegates to an inverted {@link World#isDay()} check.</p>
    */
   public static final Event<CanSleepNow> CAN_SLEEP_NOW =
       EventFactory.createArrayBacked(CanSleepNow.class, (listeners) -> (player, pos) -> {
@@ -47,7 +50,7 @@ public final class PlayerSleepEvents {
             return state;
           }
         }
-        return TriState.DEFAULT;
+        return TriState.of(!player.world.isDay());
       });
 
   /**
@@ -75,8 +78,8 @@ public final class PlayerSleepEvents {
      * @param player The sleeping player or player attempting to sleep
      * @param pos    The sleeping position of the player or the location of the sleep attempt
      * @return {@link TriState#DEFAULT} to delegate to another listener,
-     * {@link TriState#TRUE} to prevent sleep attempts and interrupt current sleep, or
-     * {@link TriState#FALSE} to allow sleeping.
+     * {@link TriState#TRUE} to allow sleeping, or
+     * {@link TriState#FALSE} to prevent sleep attempts or interrupt current sleeping.
      */
     TriState canSleepNow(PlayerEntity player, BlockPos pos);
   }
