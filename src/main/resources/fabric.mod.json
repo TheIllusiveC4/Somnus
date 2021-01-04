@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "somnus",
+  "version": "${version}",
+  "name": "Somnus API",
+  "description": "A lightweight library for integrated sleep mechanics on Fabric.",
+  "authors": ["C4"],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/somnus",
+    "sources": "https://github.com/TheIllusiveC4/Somnus",
+    "issues": "https://github.com/TheIllusiveC4/Somnus/issues"
+  },
+  "license": "LGPL-3.0-or-later",
+  "icon": "assets/somnus/somnus_icon.png",
+  "environment": "*",
+  "entrypoints": {},
+  "mixins": [
+    "somnus.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "minecraft": "1.16.x",
+    "fabric-api-base": "*"
+  }
+}
