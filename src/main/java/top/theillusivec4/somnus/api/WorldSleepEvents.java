@@ -17,6 +17,7 @@
 
 package top.theillusivec4.somnus.api;
 
+import java.util.function.BooleanSupplier;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.server.world.ServerWorld;
@@ -28,13 +29,15 @@ public class WorldSleepEvents {
 
   /**
    * Called when players finish sleeping and the world needs to update the time of day.
+   *
+   * <p>Called once in {@link ServerWorld#tick(BooleanSupplier)}</p>
    */
   public static final Event<GetWorldWakeTime> GET_WORLD_WAKE_TIME = EventFactory
       .createArrayBacked(GetWorldWakeTime.class, (listeners) -> (serverWorld, newTime, curTime) -> {
         long time = newTime;
 
         for (GetWorldWakeTime listener : listeners) {
-          time = Math.max(curTime, listener.getWorldWakeTime(serverWorld, time, curTime));
+          time = listener.getWorldWakeTime(serverWorld, time, curTime);
         }
         return time;
       });
