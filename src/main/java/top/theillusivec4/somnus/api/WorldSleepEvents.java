@@ -32,18 +32,18 @@ public class WorldSleepEvents {
    *
    * <p>Called once in {@link ServerWorld#tick(BooleanSupplier)}</p>
    */
-  public static final Event<GetWorldWakeTime> GET_WORLD_WAKE_TIME = EventFactory
-      .createArrayBacked(GetWorldWakeTime.class, (listeners) -> (serverWorld, newTime, curTime) -> {
+  public static final Event<WorldWakeTime> WORLD_WAKE_TIME = EventFactory
+      .createArrayBacked(WorldWakeTime.class, (listeners) -> (serverWorld, newTime, curTime) -> {
         long time = newTime;
 
-        for (GetWorldWakeTime listener : listeners) {
+        for (WorldWakeTime listener : listeners) {
           time = listener.getWorldWakeTime(serverWorld, time, curTime);
         }
         return time;
       });
 
   @FunctionalInterface
-  public interface GetWorldWakeTime {
+  public interface WorldWakeTime {
 
     /**
      * @param world   The server world

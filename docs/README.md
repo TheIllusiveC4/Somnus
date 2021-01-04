@@ -9,10 +9,11 @@ developers easy and compatible ways of implementing their sleep mechanics.
 - Determining the time of day for the world when players wake up
 - Preventing or hooking into sleep attempts
 - Determining valid times of day for sleeping
+- Hooking into when players wake up
 
 ## Adding to Your Project:
 
-Add the following to your build.gradle file:
+Add the following to your `build.gradle` file:
 
 ```
 repositories {
@@ -27,3 +28,24 @@ dependencies {
 ```
 
 Replace ${version} with the version of Somnus that you want to use.
+
+## Downloads
+
+**CurseForge**
+- [Somnus API](https://www.curseforge.com/minecraft/mc-mods/somnus/files)
+
+## Support
+
+Please report all bugs, issues, and feature requests to the
+[issue tracker](https://github.com/TheIllusiveC4/Somnus/issues).
+
+For non-technical support and questions, join the developer's [Discord](https://discord.gg/JWgrdwt).
+
+## License
+
+All source code and assets are licensed under LGPL 3.0.
+
+## Donations
+
+Donations to the developer can be sent through [Ko-fi](https://ko-fi.com/C0C1NL4O).
+

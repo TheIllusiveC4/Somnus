@@ -39,12 +39,10 @@ public final class PlayerSleepEvents {
    * This occurs after invoking {@link PlayerSleepEvents#TRY_SLEEP}.</p>
    *
    * <p>Invocations that receive a {@link TriState#DEFAULT} result should delegate to an inverted
-   * {@link World#isDay()} check in order to match the expected behavior in the
+   * {@link World#isDay()} check in order to match the expected result in the
    * {@link PlayerEntity#tick()} invocation.</p>
    *
-   * <p>Example:
-   * TriState state = PlayerSleepEvents.CAN_SLEEP_NOW.invoker().canSleepNow(player, pos);
-   * return state == TriState.DEFAULT ? !world.isDay() : state.get();</p>
+   * <p>See: {@link PlayerSleepEvents#canSleepNow(PlayerEntity, BlockPos)}</p>
    */
   public static final Event<CanSleepNow> CAN_SLEEP_NOW =
       EventFactory.createArrayBacked(CanSleepNow.class, (listeners) -> (player, pos) -> {
@@ -58,6 +56,22 @@ public final class PlayerSleepEvents {
         }
         return TriState.DEFAULT;
       });
+
+  /**
+   * Helper method for invoking {@link PlayerSleepEvents#CAN_SLEEP_NOW}.
+   * This delegates a {@link TriState#DEFAULT} result to an inverted {@link World#isDay()} check in
+   * order to match the invocation result in {@link PlayerEntity#tick()}.
+   *
+   * <p>This method should be preferred over directly invoking the event.</p>
+   *
+   * @param player The sleeping player or player attempting to sleep
+   * @param pos    The sleeping position of the player or the location of the sleep attempt
+   * @return True to allow sleeping, false to prevent sleep attempts or interrupt current sleeping
+   */
+  public static boolean canSleepNow(PlayerEntity player, BlockPos pos) {
+    TriState state = PlayerSleepEvents.CAN_SLEEP_NOW.invoker().canSleepNow(player, pos);
+    return state == TriState.DEFAULT ? !player.world.isDay() : state.get();
+  }
 
   /**
    * Called when a player attempts to sleep.
@@ -76,6 +90,20 @@ public final class PlayerSleepEvents {
           }
         }
         return null;
+      });
+
+  /**
+   * Called when the player wakes up.
+   * This is only for listening, nothing can be changed about the result.
+   *
+   * <p>Called once in {@link PlayerEntity#wakeUp(boolean, boolean)}.</p>
+   */
+  public static final Event<WakeUp> WAKE_UP =
+      EventFactory.createArrayBacked(WakeUp.class, (listeners) -> (player, reset, update) -> {
+
+        for (WakeUp listener : listeners) {
+          listener.wakeUp(player, reset, update);
+        }
       });
 
   @FunctionalInterface
@@ -100,5 +128,16 @@ public final class PlayerSleepEvents {
      * @return The reason that the sleeping attempt failed, or null to delegate to another listener.
      */
     PlayerEntity.SleepFailureReason trySleep(ServerPlayerEntity player, BlockPos pos);
+  }
+
+  @FunctionalInterface
+  public interface WakeUp {
+
+    /**
+     * @param player                The player waking up
+     * @param resetSleepTimer       If the sleep timer should be reset for the player
+     * @param updateSleepingPlayers If the list of sleeping players should be updated
+     */
+    void wakeUp(PlayerEntity player, boolean resetSleepTimer, boolean updateSleepingPlayers);
   }
 }

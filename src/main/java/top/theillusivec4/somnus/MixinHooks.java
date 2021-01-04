@@ -17,7 +17,6 @@
 
 package top.theillusivec4.somnus;
 
-import net.fabricmc.fabric.api.util.TriState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -32,8 +31,7 @@ public class MixinHooks {
   }
 
   public static boolean canSleepNow(PlayerEntity player, BlockPos pos) {
-    TriState state = PlayerSleepEvents.CAN_SLEEP_NOW.invoker().canSleepNow(player, pos);
-    return state == TriState.DEFAULT ? !player.world.isDay() : state.get();
+    return PlayerSleepEvents.canSleepNow(player, pos);
   }
 
   public static PlayerEntity.SleepFailureReason trySleep(ServerPlayerEntity player, BlockPos pos) {
@@ -41,6 +39,10 @@ public class MixinHooks {
   }
 
   public static long getWorldWakeTime(ServerWorld world, long newTime, long minTime) {
-    return WorldSleepEvents.GET_WORLD_WAKE_TIME.invoker().getWorldWakeTime(world, newTime, minTime);
+    return WorldSleepEvents.WORLD_WAKE_TIME.invoker().getWorldWakeTime(world, newTime, minTime);
+  }
+
+  public static void wakeUp(PlayerEntity player, boolean reset, boolean update) {
+    PlayerSleepEvents.WAKE_UP.invoker().wakeUp(player, reset, update);
   }
 }
