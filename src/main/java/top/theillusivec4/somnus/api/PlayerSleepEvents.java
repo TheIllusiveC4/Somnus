@@ -35,10 +35,16 @@ public final class PlayerSleepEvents {
    *
    * <p>Called every tick in {@link PlayerEntity#tick()} while sleeping.</p>
    *
-   * <p>Also called once when first attempting to sleep in {@link ServerPlayerEntity#trySleep(BlockPos)}.
-   * This occurs after {@link PlayerSleepEvents#TRY_SLEEP}.</p>
+   * <p>Called once when attempting to sleep in {@link ServerPlayerEntity#trySleep(BlockPos)}.
+   * This occurs after invoking {@link PlayerSleepEvents#TRY_SLEEP}.</p>
    *
-   * <p>{@link TriState#DEFAULT} delegates to an inverted {@link World#isDay()} check.</p>
+   * <p>Invocations that receive a {@link TriState#DEFAULT} result should delegate to an inverted
+   * {@link World#isDay()} check in order to match the expected behavior in the
+   * {@link PlayerEntity#tick()} invocation.</p>
+   *
+   * <p>Example:
+   * TriState state = PlayerSleepEvents.CAN_SLEEP_NOW.invoker().canSleepNow(player, pos);
+   * return state == TriState.DEFAULT ? !world.isDay() : state.get();</p>
    */
   public static final Event<CanSleepNow> CAN_SLEEP_NOW =
       EventFactory.createArrayBacked(CanSleepNow.class, (listeners) -> (player, pos) -> {
@@ -50,13 +56,14 @@ public final class PlayerSleepEvents {
             return state;
           }
         }
-        return TriState.of(!player.world.isDay());
+        return TriState.DEFAULT;
       });
 
   /**
    * Called when a player attempts to sleep.
    *
-   * <p>This occurs before any other sleeping logic or checks are called.</p>
+   * <p>Called once when attempting to sleep in {@link ServerPlayerEntity#trySleep(BlockPos)}.
+   * This occurs before any other sleeping logic or checks are called.</p>
    */
   public static final Event<TrySleep> TRY_SLEEP =
       EventFactory.createArrayBacked(TrySleep.class, (listeners) -> (player, pos) -> {
