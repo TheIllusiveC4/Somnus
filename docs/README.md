@@ -10,6 +10,7 @@ developers easy and compatible ways of implementing their sleep mechanics.
 - Preventing or hooking into sleep attempts
 - Determining valid times of day for sleeping
 - Hooking into when players wake up
+- Changing vertical offsets for sleeping players
 
 ## Adding to Your Project:
 
