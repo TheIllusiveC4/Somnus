@@ -27,7 +27,9 @@ import net.minecraft.client.network.AbstractClientPlayerEntity;
 public class SleepRenderEvents {
 
   /**
-   * Called when the player is rendered while sleeping.
+   * Called when a {@link net.minecraft.client.network.OtherClientPlayerEntity} is rendered while
+   * sleeping. This is used to properly translate vertical offsets for players being rendered who
+   * are not the client's own player.
    */
   public static final Event<PlayerVerticalTranslation> PLAYER_VERTICAL_TRANSLATION =
       EventFactory.createArrayBacked(PlayerVerticalTranslation.class, (listeners) -> (player) -> {
