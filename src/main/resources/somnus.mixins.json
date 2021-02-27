@@ -4,6 +4,7 @@
   "package": "top.theillusivec4.somnus.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "MixinBedBlock",
     "MixinPlayerEntity",
     "MixinServerPlayerEntity",
     "MixinServerWorld"
