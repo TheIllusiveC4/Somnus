@@ -10,22 +10,23 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.theillusivec4.somnus.ClientMixinHooks;
 
+@SuppressWarnings("unused")
 @Mixin(PlayerEntityRenderer.class)
 public class MixinPlayerEntityRenderer {
 
   @Inject(at = @At("HEAD"), method = "render")
-  public void _comforts_sleepingTranslate(AbstractClientPlayerEntity playerEntity, float f,
-                                          float g, MatrixStack matrixStack,
-                                          VertexConsumerProvider vertexConsumerProvider, int i,
-                                          CallbackInfo ci) {
+  public void somnus$sleepingTranslate(AbstractClientPlayerEntity playerEntity, float f, float g,
+                                       MatrixStack matrixStack,
+                                       VertexConsumerProvider vertexConsumerProvider, int i,
+                                       CallbackInfo ci) {
     ClientMixinHooks.sleepingTranslate(playerEntity, matrixStack);
   }
 
   @Inject(at = @At("TAIL"), method = "render")
-  public void _comforts_resetSleepingTranslate(AbstractClientPlayerEntity playerEntity, float f,
-                                               float g, MatrixStack matrixStack,
-                                               VertexConsumerProvider vertexConsumerProvider, int i,
-                                               CallbackInfo ci) {
+  public void somnus$resetSleepingTranslate(AbstractClientPlayerEntity playerEntity, float f,
+                                            float g, MatrixStack matrixStack,
+                                            VertexConsumerProvider vertexConsumerProvider, int i,
+                                            CallbackInfo ci) {
     ClientMixinHooks.resetSleepingTranslate(playerEntity, matrixStack);
   }
 }

@@ -30,16 +30,17 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import top.theillusivec4.somnus.MixinHooks;
 
+@SuppressWarnings({"unused", "ConstantConditions"})
 @Mixin(ServerPlayerEntity.class)
 public class MixinServerPlayerEntity {
 
   @Redirect(at = @At(value = "INVOKE", target = "net/minecraft/world/World.isDay()Z"), method = "trySleep")
-  public boolean _somnus_isDay(World world, BlockPos pos) {
+  public boolean somnus$isDay(World world, BlockPos pos) {
     return !MixinHooks.canSleepNow((PlayerEntity) (Object) this, pos);
   }
 
   @Inject(at = @At("HEAD"), method = "trySleep", cancellable = true)
-  public void _somnus_trySleep(BlockPos pos,
+  public void somnus$trySleep(BlockPos pos,
                                CallbackInfoReturnable<Either<PlayerEntity.SleepFailureReason, Unit>> ci) {
     PlayerEntity.SleepFailureReason reason =
         MixinHooks.trySleep((ServerPlayerEntity) (Object) this, pos);

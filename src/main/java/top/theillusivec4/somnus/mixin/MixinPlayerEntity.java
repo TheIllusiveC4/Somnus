@@ -26,16 +26,17 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.theillusivec4.somnus.MixinHooks;
 
+@SuppressWarnings({"unused", "ConstantConditions"})
 @Mixin(PlayerEntity.class)
 public class MixinPlayerEntity {
 
   @Redirect(at = @At(value = "INVOKE", target = "net/minecraft/world/World.isDay()Z"), method = "tick")
-  public boolean _somnus_isDay(World world) {
+  public boolean somnus$isDay(World world) {
     return !MixinHooks.canSleepNow((PlayerEntity) (Object) this);
   }
 
   @Inject(at = @At("HEAD"), method = "wakeUp(ZZ)V")
-  public void _somnus_wakeUp(boolean reset, boolean updateSleepers, CallbackInfo ci) {
+  public void somnus$wakeUp(boolean reset, boolean updateSleepers, CallbackInfo ci) {
     MixinHooks.wakeUp((PlayerEntity) (Object) this, reset, updateSleepers);
   }
 }

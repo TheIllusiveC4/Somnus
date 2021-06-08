@@ -27,11 +27,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 /**
  * Fix for vanilla bug where bed block doesn't check for null messages before sending
  */
+@SuppressWarnings("unused")
 @Mixin(BedBlock.class)
 public class MixinBedBlock {
 
   @Inject(at = @At(value = "INVOKE", target = "net/minecraft/entity/player/PlayerEntity.sendMessage(Lnet/minecraft/text/Text;Z)V"), method = "method_19283(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/entity/player/PlayerEntity$SleepFailureReason;)V", cancellable = true)
-  private static void _somnus_sendMessage(PlayerEntity unused, PlayerEntity.SleepFailureReason reason, CallbackInfo ci) {
+  private static void somnus$sendMessage(PlayerEntity unused,
+                                         PlayerEntity.SleepFailureReason reason, CallbackInfo ci) {
 
     if (reason.toText() == null) {
       ci.cancel();

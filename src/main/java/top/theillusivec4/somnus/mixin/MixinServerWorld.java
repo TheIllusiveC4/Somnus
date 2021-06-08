@@ -25,6 +25,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.theillusivec4.somnus.MixinHooks;
 
+@SuppressWarnings({"unused", "ConstantConditions"})
 @Mixin(ServerWorld.class)
 public class MixinServerWorld {
 
@@ -32,14 +33,14 @@ public class MixinServerWorld {
   private long curTime;
 
   @Inject(at = @At(value = "INVOKE", target = "net/minecraft/server/world/ServerWorld.setTimeOfDay(J)V"), method = "tick")
-  public void _somnus_setTimeOfDayPre(BooleanSupplier shouldKeepTicking, CallbackInfo ci) {
+  public void somnus$setTimeOfDayPre(BooleanSupplier shouldKeepTicking, CallbackInfo ci) {
     curTime = ((ServerWorld) (Object) this).getTimeOfDay();
     long l = curTime + 24000L;
     newTime = l - l % 24000L;
   }
 
   @Inject(at = @At(value = "INVOKE", target = "net/minecraft/server/world/ServerWorld.setTimeOfDay(J)V", shift = At.Shift.AFTER), method = "tick")
-  public void _somnus_setTimeOfDayPost(BooleanSupplier shouldKeepTicking, CallbackInfo ci) {
+  public void somnus$setTimeOfDayPost(BooleanSupplier shouldKeepTicking, CallbackInfo ci) {
     ServerWorld world = (ServerWorld) (Object) this;
     world.setTimeOfDay(MixinHooks.getWorldWakeTime(world, newTime, curTime));
   }
