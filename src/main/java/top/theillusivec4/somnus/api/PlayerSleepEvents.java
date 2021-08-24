@@ -110,6 +110,7 @@ public final class PlayerSleepEvents {
    *
    * @deprecated Use {@link net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents#STOP_SLEEPING}
    */
+  @Deprecated
   public static final Event<WakeUp> WAKE_UP =
       EventFactory.createArrayBacked(WakeUp.class, (listeners) -> (player, reset, update) -> {
 
