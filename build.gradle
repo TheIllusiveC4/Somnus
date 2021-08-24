@@ -20,8 +20,10 @@ dependencies {
 
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation fabricApi.module("fabric-api-base", project.fabric_version)
+    modImplementation fabricApi.module("fabric-entity-events-v1", project.fabric_version)
 
     include fabricApi.module("fabric-api-base", project.fabric_version)
+    include fabricApi.module("fabric-entity-events-v1", project.fabric_version)
 }
 
 processResources {
@@ -58,8 +60,7 @@ curseforge {
         changelog = file('docs/CHANGELOG.md')
         addGameVersion "Java 16"
         addGameVersion "Fabric"
-        addGameVersion "1.17-Snapshot"
-        addGameVersion "1.17"
+        addGameVersion "1.17.1"
         addArtifact(sourcesJar)
         mainArtifact(file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar"))
 

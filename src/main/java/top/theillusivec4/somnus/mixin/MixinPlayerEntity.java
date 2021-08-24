@@ -30,11 +30,6 @@ import top.theillusivec4.somnus.MixinHooks;
 @Mixin(PlayerEntity.class)
 public class MixinPlayerEntity {
 
-  @Redirect(at = @At(value = "INVOKE", target = "net/minecraft/world/World.isDay()Z"), method = "tick")
-  public boolean somnus$isDay(World world) {
-    return !MixinHooks.canSleepNow((PlayerEntity) (Object) this);
-  }
-
   @Inject(at = @At("HEAD"), method = "wakeUp(ZZ)V")
   public void somnus$wakeUp(boolean reset, boolean updateSleepers, CallbackInfo ci) {
     MixinHooks.wakeUp((PlayerEntity) (Object) this, reset, updateSleepers);

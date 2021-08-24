@@ -26,14 +26,6 @@ import top.theillusivec4.somnus.api.WorldSleepEvents;
 
 public class MixinHooks {
 
-  public static boolean canSleepNow(PlayerEntity player) {
-    return canSleepNow(player, player.getSleepingPosition().orElse(player.getBlockPos()));
-  }
-
-  public static boolean canSleepNow(PlayerEntity player, BlockPos pos) {
-    return PlayerSleepEvents.canSleepNow(player, pos);
-  }
-
   public static PlayerEntity.SleepFailureReason trySleep(ServerPlayerEntity player, BlockPos pos) {
     return PlayerSleepEvents.TRY_SLEEP.invoker().trySleep(player, pos);
   }

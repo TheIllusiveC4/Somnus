@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project uses
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.0.13-1.17.1] - 2021.08.24
+### Deprecated
+- Deprecated PlayerSleepEvents in favor of Fabric API's new EntitySleepEvents
+
 ## [0.0.12-1.17] - 2021.06.08
 ### Changed
 - Updated to Minecraft 1.17
