@@ -26,8 +26,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /**
+ * @deprecated Use {@link net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents}
  * Provides player events related to sleeping.
  */
+@Deprecated
 public final class PlayerSleepEvents {
 
   /**
@@ -43,7 +45,10 @@ public final class PlayerSleepEvents {
    * {@link PlayerEntity#tick()} invocation.</p>
    *
    * <p>See: {@link PlayerSleepEvents#canSleepNow(PlayerEntity, BlockPos)}</p>
+   *
+   * @deprecated Use {@link net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents#ALLOW_SLEEP_TIME}
    */
+  @Deprecated
   public static final Event<CanSleepNow> CAN_SLEEP_NOW =
       EventFactory.createArrayBacked(CanSleepNow.class, (listeners) -> (player, pos) -> {
 
@@ -67,7 +72,9 @@ public final class PlayerSleepEvents {
    * @param player The sleeping player or player attempting to sleep
    * @param pos    The sleeping position of the player or the location of the sleep attempt
    * @return True to allow sleeping, false to prevent sleep attempts or interrupt current sleeping
+   * @deprecated See {@link net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents#ALLOW_SLEEP_TIME}
    */
+  @Deprecated
   public static boolean canSleepNow(PlayerEntity player, BlockPos pos) {
     TriState state = PlayerSleepEvents.CAN_SLEEP_NOW.invoker().canSleepNow(player, pos);
     return state == TriState.DEFAULT ? !player.world.isDay() : state.get();
@@ -78,7 +85,10 @@ public final class PlayerSleepEvents {
    *
    * <p>Called once when attempting to sleep in {@link ServerPlayerEntity#trySleep(BlockPos)}.
    * This occurs before any other sleeping logic or checks are called.</p>
+   *
+   * @deprecated Use {@link net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents#ALLOW_SLEEPING}
    */
+  @Deprecated
   public static final Event<TrySleep> TRY_SLEEP =
       EventFactory.createArrayBacked(TrySleep.class, (listeners) -> (player, pos) -> {
 
@@ -97,7 +107,10 @@ public final class PlayerSleepEvents {
    * This is only for listening, nothing can be changed about the result.
    *
    * <p>Called once in {@link PlayerEntity#wakeUp(boolean, boolean)}.</p>
+   *
+   * @deprecated Use {@link net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents#STOP_SLEEPING}
    */
+  @Deprecated
   public static final Event<WakeUp> WAKE_UP =
       EventFactory.createArrayBacked(WakeUp.class, (listeners) -> (player, reset, update) -> {
 

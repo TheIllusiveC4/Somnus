@@ -22,21 +22,14 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Unit;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import top.theillusivec4.somnus.MixinHooks;
 
 @Mixin(ServerPlayerEntity.class)
 public class MixinServerPlayerEntity {
-
-  @Redirect(at = @At(value = "INVOKE", target = "net/minecraft/world/World.isDay()Z"), method = "trySleep")
-  public boolean _somnus_isDay(World world, BlockPos pos) {
-    return !MixinHooks.canSleepNow((PlayerEntity) (Object) this, pos);
-  }
 
   @Inject(at = @At("HEAD"), method = "trySleep", cancellable = true)
   public void _somnus_trySleep(BlockPos pos,

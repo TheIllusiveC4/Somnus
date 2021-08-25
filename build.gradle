@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '0.5-SNAPSHOT'
+    id 'fabric-loom' version '0.6-SNAPSHOT'
     id 'com.matthewprenger.cursegradle' version '1.4.0'
     id 'maven-publish'
 }
@@ -20,8 +20,10 @@ dependencies {
 
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation fabricApi.module("fabric-api-base", project.fabric_version)
+    modImplementation fabricApi.module("fabric-entity-events-v1", project.fabric_version)
 
     include fabricApi.module("fabric-api-base", project.fabric_version)
+    include fabricApi.module("fabric-entity-events-v1", project.fabric_version)
 }
 
 processResources {
